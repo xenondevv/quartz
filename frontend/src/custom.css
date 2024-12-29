@@ -1,77 +1,69 @@
-/* custom.css */
 .bod {
   background-color: #221e1e;
   margin: 0;
 }
-.cod{
+.cod {
   background-image: url(/src/assets/Blue\ Pink\ Modern\ Linktree\ Background.png);
 }
-.setwet{
-  padding-top: 0px;;
+.setwet {
+  padding-top: 0px;
 }
-input::-webkit-input-placeholder  {
-  color: white
-}
-.btn:hover {
-  color: #ff6347; /* Example: change to red on hover */
+input::-webkit-input-placeholder {
+  color: white;
 }
 .btn:hover {
-  transform: scale(1.1); /* Slightly grow the button on hover */
+  color: #000000;
 }
-/* Hover effect for delete button */
+.btn:hover {
+  transform: scale(1.1);
+}
 .delete-button {
   transition: transform 0.2s ease, color 0.2s ease;
 }
-/* Ensures the image doesn't overlap with the tasks */
 .col-md-4 {
-  margin-top: 20px; /* Adjust the space above the image */
+  margin-top: 20px;
 }
-
 .col-md-8 {
-  padding-right: 20px; /* Adds some space on the right side */
+  padding-right: 20px;
 }
-
-
 .delete-button:hover {
-  color: #ff6347; /* Red color when hovered */
-  transform: scale(1.2); /* Slightly enlarge the icon */
+  color: #ffffff;
+  transform: scale(1.4);
 }
-
-/* Optional: Adding a background on hover for better visual feedback */
 .delete-button:hover {
-  background-color: rgba(255, 99, 71, 0.1); /* Light red background */
+  background-color: rgb(255, 253, 253);
   border-radius: 50%;
-  padding: 5px; /* Adjust padding to maintain the circular shape */
+  padding: 5px;
 }
-/* Customizing the checkbox */
 .custom-checkbox {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   width: 20px;
   height: 20px;
-  border-radius: 0%; /* Circular shape */
+  border-radius: 0%;
   background-color: white;
-  border: 2px solid #ccc; /* Light grey border */
+  border: 2px solid #ccc;
   display: inline-block;
   position: relative;
   cursor: pointer;
-  margin-right: 10px; /* Space between checkbox and task text */
+  margin-right: 10px;
   transition: background-color 0.3s, border 0.3s;
 }
-
-/* Checkbox checked state */
+.taskcolor{
+  color: white;
+}
+.taskcolor:hover {
+  color: #888;
+}
 .custom-checkbox:checked {
-  background-color: #000000; /* Green when checked */
+  background-color: #000000;
   border-color: #fcfcfc;
 }
-
-/* Checkbox hover effect */
 .custom-checkbox:hover {
-  border-color: #888; /* Darker border when hovering */
+  border-color: #888;
+  scale: (1.1);
 }
-
-/* Checkmark when checked */
 .custom-checkbox:checked::after {
   content: "";
   position: absolute;
@@ -83,9 +75,44 @@ input::-webkit-input-placeholder  {
   background-color: white;
   transform: translate(-50%, -50%);
 }
-/* Style for placeholder text in task input fields */
 .form-control::placeholder {
-  color: white !important; /* Force white color for placeholder text */
+  color: white;
+}
+.form-control::placeholder:checked{
+  color: #888  !important;
+}
+.custom-checkbox {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: white;
+  border: 2px solid #ccc;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: background-color 0.3s, border 0.3s;
+}
+.custom-checkbox:checked::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 10px;
+  border-radius: 50%;
+  background-color: white;
+  transform: translate(-50%, -50%);
+}
+input[type="text"]:disabled::placeholder {
+  color: #141313;
+}
+input[type="text"]:disabled {
+  border-color: #888;
+  color: #888;
+  text-decoration: line-through;
 }
 
 .but {
@@ -107,17 +134,17 @@ input::-webkit-input-placeholder  {
   border-radius: 12px;
   color: white;
 }
-.inside{
+.inside {
   border: 0;
   margin-left: 10px;
   background-color: #221e1e;
   color: white;
   outline: none;
 }
-.but:hover{
-    border: 2px solid white;
+.but:hover {
+  border: 2px solid white;
 }
-.color{
+.color {
   color: white;
 }
 button {
@@ -125,9 +152,6 @@ button {
   font-size: 1rem;
   padding: 0.5rem 1.5rem;
 }
-/* img {
-    filter: invert(100%);
-  } */
 .navbar-logo {
   margin-top: 10px;
   width: 50px;
@@ -143,25 +167,21 @@ button {
   position: relative;
   padding: 0px;
 }
-.middle-box{
-   position: relative;
+.middle-box {
+  position: relative;
 }
 .center-highlights {
   padding-top: 0px;
   border-bottom: 60px solid #000000;
   border-left: 25px solid transparent;
   border-right: 25px solid transparent;
-  /* height: 0; */
   width: 250px;
   transform: rotate(180deg);
-  /* top: 0; */
-  /* left: 0; */
 }
-.homepage-text-container{
+.homepage-text-container {
   position: absolute;
   top: 0;
   display: flex;
-  /* background-color: 7blue; */
   width: 100%;
   height: 100%;
   justify-content: center;
