@@ -80,5 +80,27 @@ async function deleteTask(id, userid){
     }
 }
 
+
+async function updateCompletion(id, userid){
+
+    const url = 'http://localhost:5678/api/task/update';
+
+	const data = {
+		taskid: id
+	}
+
+    const headers = {
+        Authorization: "Bearer " + userid  
+    };
+
+    try {
+        const response = await axios.post(url, data, { headers });  
+        console.log('Response from server:', response.data);
+    } catch (error) {
+        console.error('Error sending data:', error.message);
+    }
+}
 //addTask( "This is new task title", "this is new long subtitle", "high", "30 Dec 2024", "week", userid)
-deleteTask("4457696", userid)
+//deleteTask("4457696", userid)
+
+updateCompletion("5463644", userid);

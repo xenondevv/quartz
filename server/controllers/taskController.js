@@ -1,4 +1,3 @@
-import { MongoUnexpectedServerResponseError } from "mongodb";
 import Task from "../models/Task.js";
 import User from "../models/User.js";
 import crypto from "crypto";
@@ -87,4 +86,34 @@ async function deleteTask(req, res) {
         
 }
 
-export { createTask, deleteTask };
+async function updateCompletion(req, res) {
+    console.log("sasd");
+    const taskid = req.body.taskid;
+    const username = req.user.username;
+    
+    try{
+       
+        const task = await Task.findOne({
+            taskid: taskid
+        }); 
+        
+
+        const result = await Task.updateOne({ taskid: taskid}, {
+            $set: {
+                completed: !task.completed | false
+            }           
+        });
+        
+        return res.status(200).json({
+            message: "Well Done Mate!"
+        });
+    }
+    catch (error){
+        return res.status(500).json({
+            message: "Maa chud gyi somewhere"
+        });
+    }
+        
+}
+
+export { createTask, deleteTask, updateCompletion };
