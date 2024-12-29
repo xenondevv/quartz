@@ -2,23 +2,25 @@ import React from "react";
 import Logo from "../assets/mdi--password (1).svg";
 import EmailLogo from "../assets/ic--baseline-email (1).svg";
 import MaterialLogo from "../assets/material-symbols--person-rounded (1).svg";
-import { useNavigate } from 'react-router-dom';
-const LoginPage: React.FC = () => {
+import { useNavigate } from "react-router-dom";
+
+const SignupPage: React.FC = () => {
   const navigate = useNavigate();
 
   const handleProfileClick = () => {
-    navigate("/login1");
-  }
-  const handleLoginButton = () => {
-    navigate("/login2");
-  }
+    navigate("/login");
+  };
   return (
     <div className="cod bod d-flex justify-content-center align-items-center vh-100 ">
-      <div>
-        <h2 className="bod text-center mb-4">Login</h2>
+      <div
+      // className="card p-4 shadow-lg"
+      // style={{ width: "22rem", borderRadius: "1rem" }}
+      >
+        <h2 className="bod text-center mb-4">Sign Up</h2>
         <form>
           <div className=" but mb-3">
-          <img src={MaterialLogo} alt="" />
+            <img src={MaterialLogo} alt="" />
+
             <input
               type="email"
               id="email"
@@ -28,7 +30,7 @@ const LoginPage: React.FC = () => {
             />
           </div>
           <div className="but  mb-3">
-          <img src={EmailLogo} alt="" />
+            <img src={EmailLogo} alt="" />
             <input
               type="email"
               id="email"
@@ -49,17 +51,17 @@ const LoginPage: React.FC = () => {
               type="password"
               id="password"
               className="inside"
-              placeholder="Enter Password"
+              placeholder="Create Password"
               required
             />
           </div>
-          <button type="submit" className="signin btn btn-light w-100 mb-3" onClick={handleLoginButton}>
-            Login
+          <button type="submit" className="signin btn btn-light w-100 mb-3">
+            Sign Up
           </button>
           <p className="text-center mb-0">
-            Don’t have an account?{" "}
+            Already have an account?{" "}
             <a href="#" className="color" onClick={handleProfileClick}>
-              Sign Up
+              Login
             </a>
           </p>
         </form>
@@ -68,4 +70,4 @@ const LoginPage: React.FC = () => {
   );
 };
 
-export default LoginPage;
+export default SignupPage;

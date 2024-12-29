@@ -7,10 +7,10 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
 
   const handleProfileClick = () => {
-    navigate("/header1");
+    navigate("/");
   }
   const handleLoginClick = () => {
-    navigate("/header2");
+    navigate("/login");
   }
   return (
     <nav className="setwet navbar navbar-dark bod px-4 d-flex align-items-center">

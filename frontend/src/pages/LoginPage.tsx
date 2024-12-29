@@ -2,25 +2,23 @@ import React from "react";
 import Logo from "../assets/mdi--password (1).svg";
 import EmailLogo from "../assets/ic--baseline-email (1).svg";
 import MaterialLogo from "../assets/material-symbols--person-rounded (1).svg";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate } from 'react-router-dom';
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
 
   const handleProfileClick = () => {
     navigate("/signup");
-  };
+  }
+  const handleLoginButton = () => {
+    navigate("/login");
+  }
   return (
-    <div className="bod d-flex justify-content-center align-items-center vh-100 ">
-      <div
-      // className="card p-4 shadow-lg"
-      // style={{ width: "22rem", borderRadius: "1rem" }}
-      >
-        <h2 className="bod text-center mb-4">Sign Up</h2>
+    <div className="cod bod d-flex justify-content-center align-items-center vh-100 ">
+      <div>
+        <h2 className="bod text-center mb-4">Login</h2>
         <form>
           <div className=" but mb-3">
-            <img src={MaterialLogo} alt="" />
-
+          <img src={MaterialLogo} alt="" />
             <input
               type="email"
               id="email"
@@ -30,7 +28,7 @@ const LoginPage: React.FC = () => {
             />
           </div>
           <div className="but  mb-3">
-            <img src={EmailLogo} alt="" />
+          <img src={EmailLogo} alt="" />
             <input
               type="email"
               id="email"
@@ -51,17 +49,17 @@ const LoginPage: React.FC = () => {
               type="password"
               id="password"
               className="inside"
-              placeholder="Create Password"
+              placeholder="Enter Password"
               required
             />
           </div>
-          <button type="submit" className="signin btn btn-light w-100 mb-3">
-            Sign Up
+          <button type="submit" className="signin btn btn-light w-100 mb-3" onClick={handleLoginButton}>
+            Login
           </button>
           <p className="text-center mb-0">
-            Already have an account?{" "}
+            Don’t have an account?{" "}
             <a href="#" className="color" onClick={handleProfileClick}>
-              Login
+              Sign Up
             </a>
           </p>
         </form>

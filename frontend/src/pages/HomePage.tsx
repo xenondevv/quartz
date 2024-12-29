@@ -1,17 +1,15 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
+import { useNavigate } from 'react-router-dom';
 import rightImage from "../assets/HomePageRightImage.png";
-const WelcomeCard: React.FC = () => {
-    const navigate = useNavigate(); // Initialize the navigate function
+const HomePage: React.FC = () => {
+    const navigate = useNavigate(); 
 
-    // Function to navigate to another page
     const handleNavigate = () => {
-      navigate("/welcome"); 
+      navigate("/login"); 
     };
   return (
     <div className="container d-flex flex-column align-items-center justify-content-center" style={{height: "100%"}}>
       <div className="row w-100">
-        {/* Left Column: Text */}
         <div className="col-md-6 text-center text-md-start">
           <h1 className="display-4 fw-bold text-white mb-4">
             Welcome to QUARTZ
@@ -23,7 +21,6 @@ const WelcomeCard: React.FC = () => {
           <button type="button" className="btn btn-outline-light" onClick={handleNavigate}>Add Task</button>
         </div>
 
-        {/* Right Column: Illustration */}
         <div className="col-md-6 text-center d-flex justify-content-center align-items-center">
           <div>
             <img
@@ -39,4 +36,4 @@ const WelcomeCard: React.FC = () => {
   );
 };
 
-export default WelcomeCard;
+export default HomePage;
