@@ -100,7 +100,29 @@ async function updateCompletion(id, userid){
         console.error('Error sending data:', error.message);
     }
 }
+
+
+async function createGroup(name, userid){
+
+    const url = 'http://localhost:5678/api/group/create';
+
+	const data = {
+		name: name
+	}
+
+    const headers = {
+        Authorization: "Bearer " + userid  
+    };
+
+    try {
+        const response = await axios.post(url, data, { headers });  
+        console.log('Response from server:', response.data);
+    } catch (error) {
+        console.error('Error sending data:', error.message);
+    }
+}
+
 //addTask( "This is new task title", "this is new long subtitle", "high", "30 Dec 2024", "week", userid)
 //deleteTask("4457696", userid)
-
-updateCompletion("5463644", userid);
+//updateCompletion("5463644", userid);
+createGroup("NewNiggaGroup", userid);

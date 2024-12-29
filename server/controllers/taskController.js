@@ -87,7 +87,6 @@ async function deleteTask(req, res) {
 }
 
 async function updateCompletion(req, res) {
-    console.log("sasd");
     const taskid = req.body.taskid;
     const username = req.user.username;
     
@@ -116,4 +115,29 @@ async function updateCompletion(req, res) {
         
 }
 
-export { createTask, deleteTask, updateCompletion };
+async function getAllTasks(req, res) {
+    const { username } = req.body.username;
+
+    try {
+        const user = await User.findOne({ username });
+
+        if (!user) {
+            return res.status(404).json({
+                message: "Cannot find the user!"
+            });
+        }
+
+        const tasks = await Task.find({ taskid: { $in: user.tasks } });
+
+        return res.status(200).json({
+            message: "Tasks fetched successfully!",
+            tasks,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "An error occurred while fetching tasks."
+        });
+    }
+}
+
+export { createTask, deleteTask, updateCompletion, getAllTasks };
