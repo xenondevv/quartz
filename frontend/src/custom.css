@@ -1,0 +1,46 @@
+/* custom.css */
+.bod {
+    background-color: #221E1E;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  button {
+    border-radius: 25px;
+    font-size: 1rem;
+    padding: 0.5rem 1.5rem;
+  }
+  /* img {
+    filter: invert(100%);
+  } */
+  .navbar-logo {
+    margin-top: 10px;
+    width: 50px;
+    height: 50px;
+  }
+  .navbar-login-img {
+    margin-top: 10px;
+    width: 40px;
+    height: 40px;
+  }
+  .navbar {
+    display: inline-block;
+    position: relative;
+  }
+  
+.center-highlights {
+    border-bottom: 50px solid #555;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    height: 0;
+    width: 125px;
+    transform: rotate(180deg);
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .text {
+    position: relative;
+    top: 15px; 
+    text-align: center;
+    left:90px;
+  }
