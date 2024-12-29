@@ -1,46 +1,167 @@
 /* custom.css */
 .bod {
-    background-color: #221E1E;
-    margin: 0;
-    box-sizing: border-box;
-  }
-  button {
-    border-radius: 25px;
-    font-size: 1rem;
-    padding: 0.5rem 1.5rem;
-  }
-  /* img {
+  background-color: #221e1e;
+  margin: 0;
+}
+.cod{
+  background-image: url(/src/assets/Blue\ Pink\ Modern\ Linktree\ Background.png);
+}
+.setwet{
+  padding-top: 0px;;
+}
+input::-webkit-input-placeholder  {
+  color: white
+}
+.btn:hover {
+  color: #ff6347; /* Example: change to red on hover */
+}
+.btn:hover {
+  transform: scale(1.1); /* Slightly grow the button on hover */
+}
+/* Hover effect for delete button */
+.delete-button {
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+/* Ensures the image doesn't overlap with the tasks */
+.col-md-4 {
+  margin-top: 20px; /* Adjust the space above the image */
+}
+
+.col-md-8 {
+  padding-right: 20px; /* Adds some space on the right side */
+}
+
+
+.delete-button:hover {
+  color: #ff6347; /* Red color when hovered */
+  transform: scale(1.2); /* Slightly enlarge the icon */
+}
+
+/* Optional: Adding a background on hover for better visual feedback */
+.delete-button:hover {
+  background-color: rgba(255, 99, 71, 0.1); /* Light red background */
+  border-radius: 50%;
+  padding: 5px; /* Adjust padding to maintain the circular shape */
+}
+/* Customizing the checkbox */
+.custom-checkbox {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 0%; /* Circular shape */
+  background-color: white;
+  border: 2px solid #ccc; /* Light grey border */
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  margin-right: 10px; /* Space between checkbox and task text */
+  transition: background-color 0.3s, border 0.3s;
+}
+
+/* Checkbox checked state */
+.custom-checkbox:checked {
+  background-color: #000000; /* Green when checked */
+  border-color: #fcfcfc;
+}
+
+/* Checkbox hover effect */
+.custom-checkbox:hover {
+  border-color: #888; /* Darker border when hovering */
+}
+
+/* Checkmark when checked */
+.custom-checkbox:checked::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: white;
+  transform: translate(-50%, -50%);
+}
+/* Style for placeholder text in task input fields */
+.form-control::placeholder {
+  color: white !important; /* Force white color for placeholder text */
+}
+
+.but {
+  background-color: #221e1e;
+  border: 2px solid white;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 15px;
+  padding-right: 65px;
+  border-radius: 12px;
+}
+.signin {
+  background-color: #221e1e;
+  border: 2px solid white;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 12px;
+  color: white;
+}
+.inside{
+  border: 0;
+  margin-left: 10px;
+  background-color: #221e1e;
+  color: white;
+  outline: none;
+}
+.but:hover{
+    border: 2px solid white;
+}
+.color{
+  color: white;
+}
+button {
+  border-radius: 25px;
+  font-size: 1rem;
+  padding: 0.5rem 1.5rem;
+}
+/* img {
     filter: invert(100%);
   } */
-  .navbar-logo {
-    margin-top: 10px;
-    width: 50px;
-    height: 50px;
-  }
-  .navbar-login-img {
-    margin-top: 10px;
-    width: 40px;
-    height: 40px;
-  }
-  .navbar {
-    display: inline-block;
-    position: relative;
-  }
-  
+.navbar-logo {
+  margin-top: 10px;
+  width: 50px;
+  height: 50px;
+}
+.navbar-login-img {
+  margin-top: 10px;
+  width: 40px;
+  height: 40px;
+}
+.navbar {
+  display: inline-block;
+  position: relative;
+}
+.middle-box{
+   position: relative;
+}
 .center-highlights {
-    border-bottom: 50px solid #555;
-    border-left: 50px solid transparent;
-    border-right: 50px solid transparent;
-    height: 0;
-    width: 125px;
-    transform: rotate(180deg);
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-  .text {
-    position: relative;
-    top: 15px; 
-    text-align: center;
-    left:90px;
-  }
+  border-bottom: 30px solid #000000;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  /* height: 0; */
+  width: 125px;
+  transform: rotate(180deg);
+  /* top: 0; */
+  /* left: 0; */
+}
+.homepage-text-container{
+  position: absolute;
+  top: 0;
+  display: flex;
+  /* background-color: 7blue; */
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}

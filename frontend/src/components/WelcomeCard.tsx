@@ -6,10 +6,10 @@ const WelcomeCard: React.FC = () => {
 
     // Function to navigate to another page
     const handleNavigate = () => {
-      navigate("/login"); 
+      navigate("/welcome"); 
     };
   return (
-    <div className="container d-flex flex-column align-items-center justify-content-center vh-100">
+    <div className="container d-flex flex-column align-items-center justify-content-center" style={{height: "100%"}}>
       <div className="row w-100">
         {/* Left Column: Text */}
         <div className="col-md-6 text-center text-md-start">
