@@ -25,7 +25,7 @@ async function createGroup(req, res) {
             });
         }
         
-        const g = Group.create(group);
+        const g = await Group.create(group);
         
         if(g){
             return res.status(200).json({
@@ -155,4 +155,44 @@ async function leaveGroup(req, res) {
     }
 }
 
-export {createGroup, deleteGroup, joinGroup, leaveGroup};
+async function viewUserGroups(req, res) {
+    const username = req.body.username;
+
+    try {
+        const user = await User.findOne({ username });
+
+        if (!user) {
+            return res.status(404).json({
+                message: "Cannot find the user!"
+            });
+        }
+
+        const groups = await Group.find({ groupid: { $in: user.groups } });
+
+        return res.status(200).json({
+            message: "Groups fetched successfully!",
+            groups,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "An error occurred while fetching the groups."
+        });
+    }
+}
+
+async function viewAllGroups(req, res) {
+    try {
+        const groups = await Group.find({});
+
+        return res.status(200).json({
+            message: "All groups fetched successfully!",
+            groups,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "An error occurred while fetching all groups."
+        });
+    }
+}
+
+export { createGroup, deleteGroup, joinGroup, leaveGroup, viewUserGroups, viewAllGroups };
