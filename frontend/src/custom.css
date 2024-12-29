@@ -141,16 +141,18 @@ button {
 .navbar {
   display: inline-block;
   position: relative;
+  padding: 0px;
 }
 .middle-box{
    position: relative;
 }
 .center-highlights {
-  border-bottom: 30px solid #000000;
-  border-left: 15px solid transparent;
-  border-right: 15px solid transparent;
+  padding-top: 0px;
+  border-bottom: 60px solid #000000;
+  border-left: 25px solid transparent;
+  border-right: 25px solid transparent;
   /* height: 0; */
-  width: 125px;
+  width: 250px;
   transform: rotate(180deg);
   /* top: 0; */
   /* left: 0; */

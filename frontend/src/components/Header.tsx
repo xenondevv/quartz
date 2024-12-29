@@ -13,7 +13,7 @@ const Header: React.FC = () => {
     navigate("/login");
   }
   return (
-    <nav className="setwet navbar navbar-dark bod px-4 d-flex align-items-center">
+    <nav className="setwet navbar navbar-dark bod px-4 d-flex align-items-center" style={{padding: "0px"}}>
       {/* Left: Logo */}
       <div className="d-flex align-items-center">
         <img
@@ -28,7 +28,7 @@ const Header: React.FC = () => {
       <div className="navbar">
         <div className="middle-box">
           <div className="center-highlights"></div>
-          <div className="homepage-text-container">
+          <div className="display-6 homepage-text-container">
             QUARTZ
           </div>
         </div>
