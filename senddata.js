@@ -1,12 +1,16 @@
 import axios from "axios";
 
-async function register() {
-    const url = 'http://localhost:5678/api/users/register';
+const userid = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NzA2NDU4YzVkNjkyZGViNmFhNzQzOSIsImlhdCI6MTczNTQxODk2OCwiZXhwIjoxODIxODE4OTY4fQ.9a5H-U9tTH0wWS9vONHTDk6QiIQhnfiHQ-Nkb3LwrAE"
+
+async function register(name, username, email, password) {
+    const url = 'http://localhost:5678/api/auth/register';
     const userData = {
-        name: 'vedant singh',
-		username: 'vedantsinggh',
-        email: 'vedantsinggh@gmail.com',
-		password: 'vedantmi',
+        name: name,
+		username: username,
+        email: email,
+		password: password,
+		group: [],
+		tasks: [],
     };
 
     try {
@@ -18,7 +22,7 @@ async function register() {
 }
 
 async function login(email, password){
-	const url = 'http://localhost:5678/api/users/login';
+	const url = 'http://localhost:5678/api/auth/login';
 	const data = {
 		email: email,
 		password: password,
@@ -32,6 +36,49 @@ async function login(email, password){
     }
 }
 
-login("vedantsinggh@gmail.com", "vedantmi");
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NzA0NmFiNTQzNTNhMjk3ZmQxYmRmOCIsImlhdCI6MTczNTQxMTM3MSwiZXhwIjoxNzM1NDE0OTcxfQ.YP__Imu341zP-mmSCToxv4RGQd_aUy8m5fEIp1KosgU
+async function addTask(title, subt, priority, due, repeatition, userid) {
+    const url = 'http://localhost:5678/api/task/create';
 
+    const task = {
+        title: title,
+        subtitle: subt, 
+        priority: priority,
+        due: due,
+        repeatition: repeatition,
+    };
+
+    const headers = {
+        Authorization: "Bearer " + userid  
+    };
+
+    try {
+        const response = await axios.post(url, task, { headers });  
+        console.log('Response from server:', response.data);
+    } catch (error) {
+        console.error('Error sending data:', error.message);
+    }
+}
+
+
+async function deleteTask(id, userid){
+
+    const url = 'http://localhost:5678/api/task/delete';
+
+	const data = {
+		taskid: id
+	}
+
+    const headers = {
+        Authorization: "Bearer " + userid  
+    };
+
+    try {
+        const response = await axios.post(url, data, { headers });  
+        console.log('Response from server:', response.data);
+    } catch (error) {
+        console.error('Error sending data:', error.message);
+    }
+}
+
+//addTask( "This is new task title", "this is new long subtitle", "high", "30 Dec 2024", "week", userid)
+deleteTask("4457696", userid)

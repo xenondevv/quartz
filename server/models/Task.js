@@ -2,6 +2,13 @@ import mongoose from "mongoose";
 
 const taskSchema = new mongoose.Schema(
     {
+        
+        taskid: {
+            type: String,
+            required: true,
+            unique: true,
+        },
+        
         title: {
             type: String,
             required: true
@@ -18,7 +25,7 @@ const taskSchema = new mongoose.Schema(
         },
         
         due: {
-            type: Date,
+            type: String,
             required: true
         },
          
@@ -27,15 +34,14 @@ const taskSchema = new mongoose.Schema(
             required: true,
         },
         
-        type: {
+        repeatition: {
             type: String, // once, week, month
             required: true,
         },
-        
-        timestamps: true
     }
 );
 
 const Task = mongoose.model("Task", taskSchema);
 
 export default Task;
+export {taskSchema};
