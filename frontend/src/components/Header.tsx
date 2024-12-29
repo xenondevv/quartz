@@ -1,6 +1,7 @@
 import React from "react";
 import HeaderLogo from "../assets/MainProfile.png";
 import LoginImage from "../assets/loginimage.svg";
+import LogoutIcon from "../assets/material-symbols--person-rounded (1).svg"
 import { useNavigate } from 'react-router-dom';
 
 const Header: React.FC = () => {
@@ -11,6 +12,17 @@ const Header: React.FC = () => {
   }
   const handleLoginClick = () => {
     navigate("/login");
+  }
+  
+  const handleLogout = () => {
+    localStorage.clear();
+    alert("Logged out");
+    navigate("/login");
+  }
+  
+  var isLoggedIn: Boolean = false;
+  if (localStorage.getItem("token") !== null){
+    isLoggedIn = true; 
   }
   return (
     <nav className="setwet navbar navbar-dark bod px-4 d-flex align-items-center" style={{padding: "0px"}}>
@@ -35,9 +47,10 @@ const Header: React.FC = () => {
       </div>
 
       {/* Right: Profile Button */}
-      <div>
-          <img className="navbar-login-img" src={LoginImage} alt="" onClick={handleLoginClick}/>
-      </div>
+      
+      {<div>
+          <img className="navbar-login-img" src={isLoggedIn ? LogoutIcon :LoginImage} alt="" onClick={isLoggedIn ? handleLogout :handleLoginClick}/>
+      </div>}
     </nav>
   );
 };

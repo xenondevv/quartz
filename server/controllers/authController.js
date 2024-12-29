@@ -22,7 +22,7 @@ const registerUser = async (req, res) => {
             password
         });
         
-        res.status(201).json({
+        res.status(200).json({
             message: "User created",
         });
     }
@@ -45,7 +45,7 @@ const loginUser = async (req, res) => {
         
         if(user.password === password){
             const token = jwt.sign({id: user.id}, process.env.JWT_SECRET, {expiresIn: '1000d'});
-            return res.status(200).json({token});
+            return res.status(200).json({token: token, username: user.username});
         }else {
             return res.status(400).json({
                 message: "Invalid credentials",
