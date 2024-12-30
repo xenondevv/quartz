@@ -13,6 +13,10 @@
   padding-top: 0px;
 }
 
+.gap{
+  margin-left: 10px;
+}
+
 .navbar-login-img:hover {
   transform: scale(1.1);
 }
@@ -189,7 +193,6 @@ button {
   display: inline-block;
   position: relative;
   padding: 0px;
-
 }
 
 /* Middle Box */
@@ -216,5 +219,12 @@ button {
   width: 100%;
   height: 100%;
   justify-content: center;
+  align-items: center;
+}
+
+/* Aligning "View Tasks" button to the right */
+.fl {
+  display: flex;
+  justify-content: space-between; /* This will push the button to the right */
   align-items: center;
 }

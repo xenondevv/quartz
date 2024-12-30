@@ -6,6 +6,7 @@ import LoginPage from './pages/LoginPage';
 import TaskPage from './pages/TaskPage';
 import SignupPage from './pages/SignupPage';
 import GroupPage from './pages/GroupPage';
+import MembersPage from './pages/MembersPage';
 const App: React.FC = () => {
 
   var isLoggedIn = false;
@@ -21,7 +22,8 @@ const App: React.FC = () => {
           <Route path="/login" element={<LoginPage />} /> 
           <Route path='/signup' element={<SignupPage/>}/>
           <Route path="/task" element={<TaskPage/>} />
-          <Route path="/group" element={<GroupPage/>} />
+          <Route path="/group" element={<GroupPage />} />
+          <Route path="/members" element={<MembersPage/>} />
         </Routes>
       </div>
     </Router>
