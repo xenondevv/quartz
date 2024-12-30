@@ -4,46 +4,129 @@
   background-color: #221e1e;
   margin: 0;
 }
+
 .cod {
   background-image: url(/src/assets/Blue\ Pink\ Modern\ Linktree\ Background.png);
 }
+
 .setwet {
   padding-top: 0px;
 }
-input::-webkit-input-placeholder {
-  color: white;
-}
-.btn:hover {
-  color: #000000;
-}
-.btn:hover {
+
+.navbar-login-img:hover {
   transform: scale(1.1);
 }
+
+/* Taskbar Styling */
+.taskcolor {
+  color: white !important; /* Ensure the text color is always white when typing */
+  background-color: #221e1e; /* Ensures background is consistent */
+  border: 2px solid white; /* Border color */
+}
+
+.taskcolor.completed-task {
+  border-color: #888;
+  color: #888 !important; /* Light gray color for completed tasks */
+  text-decoration: line-through;
+}
+
+/* Placeholder Styling */
+.taskcolor::placeholder {
+  color: white !important; /* Placeholder color when task is not completed */
+}
+
+.taskcolor.completed-task::placeholder {
+  color: #888 !important; /* Placeholder color when task is completed */
+}
+
+/* Placeholder text color for webkit browsers (Chrome, Safari) */
+input::-webkit-input-placeholder {
+  color: white !important;
+}
+
+/* For Firefox */
+input:-moz-placeholder {
+  color: white !important;
+}
+
+/* For Internet Explorer */
+input:-ms-input-placeholder {
+  color: white !important;
+}
+
+/* Disabled Input Placeholder */
+input[type="text"]:disabled::placeholder {
+  color: #141313;
+}
+
+/* Input Styles */
+input[type="text"]:disabled {
+  border-color: #888;
+  color: #888;
+  text-decoration: line-through;
+}
+
+/* Button Hover Effects */
+.btn:hover {
+  color: #000000;
+  transform: scale(1.1);
+}
+
+.but:hover {
+  border: 2px solid white;
+}
+
+/* Buttons */
+.but {
+  background-color: #221e1e;
+  border: 2px solid white;
+  padding: 15px 65px 15px 15px;
+  border-radius: 12px;
+}
+
+.signin {
+  background-color: #221e1e;
+  border: 2px solid white;
+  padding: 15px;
+  border-radius: 12px;
+  color: white;
+}
+
+button {
+  border-radius: 25px;
+  font-size: 1rem;
+  padding: 0.5rem 1.5rem;
+}
+
+.inside {
+  border: 0;
+  margin-left: 10px;
+  background-color: #221e1e;
+  color: white;
+  outline: none;
+}
+
+/* Delete Button */
 .delete-button {
   transition: transform 0.2s ease, color 0.2s ease;
 }
-.col-md-4 {
-  margin-top: 20px;
-}
-.col-md-8 {
-  padding-right: 20px;
-}
+
 .delete-button:hover {
   color: #ffffff;
   transform: scale(1.4);
-}
-.delete-button:hover {
   background-color: rgb(255, 253, 253);
   border-radius: 50%;
   padding: 5px;
 }
+
+/* Custom Checkbox */
 .custom-checkbox {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   width: 20px;
   height: 20px;
-  border-radius: 0%;
+  border-radius: 50%;
   background-color: white;
   border: 2px solid #ccc;
   display: inline-block;
@@ -52,20 +135,17 @@ input::-webkit-input-placeholder {
   margin-right: 10px;
   transition: background-color 0.3s, border 0.3s;
 }
-.taskcolor{
-  color: white;
+
+.custom-checkbox:hover {
+  border-color: #888;
+  transform: scale(1.1);
 }
-.taskcolor:hover {
-  color: #888;
-}
+
 .custom-checkbox:checked {
   background-color: #000000;
   border-color: #fcfcfc;
 }
-.custom-checkbox:hover {
-  border-color: #888;
-  scale: (1.1);
-}
+
 .custom-checkbox:checked::after {
   content: "";
   position: absolute;
@@ -77,102 +157,47 @@ input::-webkit-input-placeholder {
   background-color: white;
   transform: translate(-50%, -50%);
 }
+
+/* Form Control Placeholder Styling */
 .form-control::placeholder {
   color: white;
 }
-.form-control::placeholder:checked{
-  color: #888  !important;
-}
-.custom-checkbox {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: white;
-  border: 2px solid #ccc;
-  display: inline-block;
-  position: relative;
-  cursor: pointer;
-  margin-right: 10px;
-  transition: background-color 0.3s, border 0.3s;
-}
-.custom-checkbox:checked::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  height: 10px;
-  border-radius: 50%;
-  background-color: white;
-  transform: translate(-50%, -50%);
-}
-input[type="text"]:disabled::placeholder {
-  color: #141313;
-}
-input[type="text"]:disabled {
-  border-color: #888;
-  color: #888;
-  text-decoration: line-through;
+
+/* Columns */
+.col-md-4 {
+  margin-top: 20px;
 }
 
-.but {
-  background-color: #221e1e;
-  border: 2px solid white;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  padding-left: 15px;
-  padding-right: 65px;
-  border-radius: 12px;
+.col-md-8 {
+  padding-right: 20px;
 }
-.signin {
-  background-color: #221e1e;
-  border: 2px solid white;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  padding-left: 10px;
-  padding-right: 10px;
-  border-radius: 12px;
-  color: white;
-}
-.inside {
-  border: 0;
-  margin-left: 10px;
-  background-color: #221e1e;
-  color: white;
-  outline: none;
-}
-.but:hover {
-  border: 2px solid white;
-}
-.color {
-  color: white;
-}
-button {
-  border-radius: 25px;
-  font-size: 1rem;
-  padding: 0.5rem 1.5rem;
-}
+
+/* Navbar */
 .navbar-logo {
   margin-top: 10px;
   width: 50px;
   height: 50px;
 }
+
 .navbar-login-img {
   margin-top: 10px;
   width: 40px;
   height: 40px;
 }
+
 .navbar {
   display: inline-block;
   position: relative;
   padding: 0px;
 
 }
+
+/* Middle Box */
 .middle-box {
   position: relative;
 }
+
+/* Center Highlights */
 .center-highlights {
   padding-top: 0px;
   border-bottom: 60px solid #000000;
@@ -181,6 +206,8 @@ button {
   width: 250px;
   transform: rotate(180deg);
 }
+
+/* Homepage Text */
 .homepage-text-container {
   font-family: "Sixtyfour";
   position: absolute;
