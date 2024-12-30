@@ -1,22 +1,19 @@
 import { useState } from "react";
 import { Trash2 } from "lucide-react";
-import Logo from "../assets/MainProfile.png";
 import st from "../assets/stickman.svg";
 
 const TaskPage = () => {
-  const [tasks, setTasks] = useState<{ id: number; text: string; completed: boolean }[]>([
-    { id: 1, text: "Task 1", completed: false },
-    { id: 2, text: "Task 2", completed: false },
-    { id: 3, text: "Task 3", completed: false },
-    { id: 4, text: "Task 4", completed: false },
+  const [tasks, setTasks] = useState<{ id: number; text: string; completed: boolean; isAnimating?: boolean }[]>([
+    { id: 1, text: "", completed: false },
+    { id: 2, text: "", completed: false },
+    { id: 3, text: "", completed: false },
+    { id: 4, text: "", completed: false },
   ]);
 
-  // Function to generate the next task ID, ensuring it is unique.
   const getNextTaskId = () => {
     return tasks.length > 0 ? Math.max(...tasks.map(task => task.id)) + 1 : 1;
   };
 
-  // Update task text
   const handleTaskChange = (id: number, value: string) => {
     const newTasks = tasks.map(task =>
       task.id === id ? { ...task, text: value } : task
@@ -24,86 +21,105 @@ const TaskPage = () => {
     setTasks(newTasks);
   };
 
-  // Toggle task completion status
   const handleCheckboxChange = (id: number) => {
-    const newTasks = tasks.map(task =>
-      task.id === id ? { ...task, completed: !task.completed } : task
-    );
+    const taskToAnimate = tasks.find(task => task.id === id);
+    if (!taskToAnimate) return;
 
-    // Sort tasks so completed ones come last
-    const sortedTasks = newTasks.sort((a, b) => Number(a.completed) - Number(b.completed));
+    // First, mark the task as animating
+    setTasks(prevTasks => prevTasks.map(task =>
+      task.id === id ? { ...task, isAnimating: true } : task
+    ));
 
-    setTasks([...sortedTasks]); // Update the state with sorted tasks
+    // After animation starts, update completion and sort
+    setTimeout(() => {
+      setTasks(prevTasks => {
+        const updatedTasks = prevTasks.map(task =>
+          task.id === id ? { ...task, completed: !task.completed, isAnimating: false } : task
+        );
+        return [...updatedTasks.sort((a, b) => Number(a.completed) - Number(b.completed))];
+      });
+    }, 500); // Match this with CSS animation duration
   };
 
-  // Add new task with a unique id
   const addTask = () => {
-    const newTaskId = getNextTaskId(); // Get the next unique task ID
-    setTasks([
-      ...tasks,
-      { id: newTaskId, text: "", completed: false }
-    ]);
+    const newTaskId = getNextTaskId();
+    setTasks([...tasks, { id: newTaskId, text: "", completed: false }]);
   };
 
-  // Delete task
   const deleteTask = (id: number) => {
     setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
   };
 
   return (
-    <div className="bod min-h-screen p-4">
+    <div className="bod min-h-screen p-4" style={{ height: "100vh", overflow: "hidden" }}>
+      <style>
+        {`
+          @keyframes slideDown {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(40px); opacity: 0; }
+          }
+          
+          .task-item {
+            transition: all 0.3s ease;
+          }
+          
+          .task-animating {
+            animation: slideDown 0.5s ease-in-out;
+          }
+          
+          .completed-task {
+            text-decoration: line-through;
+            opacity: 0.6;
+          }
+        `}
+      </style>
       <div
         className="bod container mx-auto bg-black rounded-4 p-4"
-        style={{ maxWidth: "1000px" }}
+        style={{ maxWidth: "1000px", height: "100%" }}
       >
         <div className="d-flex justify-content-between align-items-center mb-4 px-3">
-          <button className="btn btn-outline-light btn-sm px-4">
-            Create Group
-          </button>
-          <img src={Logo} alt="Quartz Logo" className="w-8 h-8" height="50px" />
-          <button className="btn btn-outline-light btn-sm px-4">
-            Join Group
-          </button>
+          <button className="btn btn-outline-light btn-sm px-4">Create Group</button>
+          <button className="btn btn-outline-light btn-sm px-4">Join Group</button>
         </div>
 
-        <div className="bg-black rounded-4 p-4">
+        <div className="bg-black rounded-4 p-4" style={{ height: "calc(100% - 60px)", overflow: "hidden" }}>
           <h1 className="text-light text-center mb-4">To-do List</h1>
 
-          <div className="row">
-            <div className="col-md-8">
-              <h2 className="text-light mb-3">Today</h2>
+          <div className="row" style={{ height: "calc(100% - 60px)" }}>
+            <div
+              className="col-12 col-md-8 d-flex flex-column align-items-center align-items-md-start"
+              style={{
+                height: "100%",
+                overflowY: "auto",
+                msOverflowStyle: "none",
+                scrollbarWidth: "none",
+              }}
+            >
+              <h2 className="text-light mb-3 text-center text-md-start">Today</h2>
 
-              <div className="d-flex flex-column gap-3">
+              <div className="d-flex flex-column gap-3 w-100">
                 {tasks.map((task) => (
-                  <div key={task.id} className="d-flex align-items-center gap-3">
-                    {/* Checkbox inside the form, styled to be circular and white */}
+                  <div 
+                    key={task.id} 
+                    className={`d-flex align-items-center gap-3 task-item ${task.isAnimating ? 'task-animating' : ''}`}
+                  >
                     <div className="form-check">
                       <input
                         type="checkbox"
                         className="form-check-input custom-checkbox"
                         id={`task-${task.id}`}
                         checked={task.completed}
-                        onChange={() => handleCheckboxChange(task.id)} // Toggle completion of specific task
+                        onChange={() => handleCheckboxChange(task.id)}
                       />
                     </div>
                     <input
                       type="text"
                       placeholder={`Task ${task.id}`}
-                      className="taskcolor form-control bg-transparent"
+                      className={`taskcolor form-control bg-transparent ${
+                        task.completed ? "completed-task" : ""
+                      }`}
                       value={task.text}
                       onChange={(e) => handleTaskChange(task.id, e.target.value)}
-                      style={{
-                        border: task.completed
-                          ? "1px solid #888"
-                          : "1px solid #fff",
-                        textDecoration: task.completed
-                          ? "line-through solid #888"
-                          : "solid #888",
-                        color: task.completed
-                          ? "#888"
-                          : "#fff"
-                        
-                      }}
                     />
                     <button
                       onClick={() => deleteTask(task.id)}
@@ -123,7 +139,7 @@ const TaskPage = () => {
 
               <button
                 onClick={addTask}
-                className="btn btn-outline-secondary btn-sm mt-4"
+                className="btn btn-outline-secondary btn-sm mt-4 align-self-center align-self-md-start"
                 style={{
                   border: "1px solid white",
                   color: "white",
@@ -135,7 +151,7 @@ const TaskPage = () => {
             </div>
 
             <div
-              className="col-md-4 d-flex justify-content-center pt-4"
+              className="col-md-4 d-none d-md-flex justify-content-center pt-4"
               style={{ marginTop: "20px" }}
             >
               <img src={st} alt="Stick Figure" className="w-40 opacity-80" />

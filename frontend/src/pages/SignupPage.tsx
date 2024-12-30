@@ -4,7 +4,7 @@ import EmailLogo from "../assets/ic--baseline-email (1).svg";
 import MaterialLogo from "../assets/material-symbols--person-rounded (1).svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { hitpoint } from "../HitPoint";
+import { hitpoint } from "../HitPoint.tsx";
 
 const SignupPage: React.FC = () => {
   const navigate = useNavigate();
