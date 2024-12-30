@@ -29,7 +29,7 @@ async function createTask(req, res) {
             });
         }
         
-        const t = Task.create(task);
+        const t = await Task.create(task);
 
         if(!t) return res.status(400).json({
             message: "something went wrong"
@@ -51,72 +51,67 @@ async function deleteTask(req, res) {
     const taskid = req.body.taskid;
     const username = req.user.username;
     
-    try{
-        
+    try {
         const user = await User.findOneAndUpdate(
             { username }, 
             { $pull: { tasks:  taskid} }, 
             { new: true, runValidators: true }  
         );
 
-        if(!user){
+        if (!user) {
             return res.status(404).json({
                 message: "Cant find user"
             });
         }
         
-        const result = await Task.deleteOne({ taskid: taskid});
+        const result = await Task.deleteOne({ taskid: taskid });
         
-        if (result.deletedCount === 1){
+        if (result.deletedCount === 1) {
             return res.status(200).json({
                 message: "Deleted successfully",
             });
-        }else{
+        } else {
             return res.status(404).json({
                 message: "Cant find task"
             });
         }
-        
-    }
-    catch (error){
+    } catch (error) {
         return res.status(500).json({
-            message: "Maa chud gyi somewhere"
+            message: "An error occurred."
         });
     }
-        
 }
 
 async function updateCompletion(req, res) {
     const taskid = req.body.taskid;
-    const username = req.user.username;
-    
-    try{
-       
-        const task = await Task.findOne({
-            taskid: taskid
-        }); 
-        
 
-        const result = await Task.updateOne({ taskid: taskid}, {
+    try {
+        const task = await Task.findOne({ taskid: taskid }); 
+
+        if (!task) {
+            return res.status(404).json({
+                message: "Task not found."
+            });
+        }
+
+        await Task.updateOne({ taskid: taskid }, {
             $set: {
-                completed: !task.completed | false
+                completed: !task.completed
             }           
         });
-        
+
         return res.status(200).json({
-            message: "Well Done Mate!"
+            message: "Task completion status updated!"
         });
-    }
-    catch (error){
+    } catch (error) {
         return res.status(500).json({
-            message: "Maa chud gyi somewhere"
+            message: "An error occurred."
         });
     }
-        
 }
 
 async function getAllTasks(req, res) {
-    const { username } = req.body.username;
+    const username = req.user.username;
 
     try {
         const user = await User.findOne({ username });
@@ -140,4 +135,32 @@ async function getAllTasks(req, res) {
     }
 }
 
-export { createTask, deleteTask, updateCompletion, getAllTasks };
+async function updateTaskTitle(req, res) {
+    console.log("kya bak rahe ho madarchod");
+    const { taskid, newtitle } = req.body;
+
+    try {
+        const task = await Task.findOneAndUpdate(
+            { taskid: taskid },
+            { $set: { title: newtitle } },
+            { new: true, runValidators: true }
+        );
+
+        if (!task) {
+            return res.status(404).json({
+                message: "Task not found."
+            });
+        }
+
+        return res.status(200).json({
+            message: "Task title updated successfully!",
+            task,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "An error occurred while updating the task title."
+        });
+    }
+}
+
+export { createTask, deleteTask, updateCompletion, getAllTasks, updateTaskTitle };
