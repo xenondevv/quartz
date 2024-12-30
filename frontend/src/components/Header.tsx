@@ -1,7 +1,7 @@
 import React from "react";
 import HeaderLogo from "../assets/MainProfile.png";
 import LoginImage from "../assets/loginimage.svg";
-import LogoutIcon from "../assets/material-symbols--person-rounded (1).svg"
+import LogoutIcon from "../assets/logout.svg"
 import { useNavigate } from 'react-router-dom';
 
 const Header: React.FC = () => {
@@ -40,7 +40,7 @@ const Header: React.FC = () => {
       <div className="navbar">
         <div className="middle-box">
           <div className="center-highlights"></div>
-          <div className="display-6 homepage-text-container">
+          <div className="lead homepage-text-container">
             QUARTZ
           </div>
         </div>

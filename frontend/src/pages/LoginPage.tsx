@@ -11,6 +11,7 @@ const LoginPage: React.FC = () => {
   const [password, setPassword] = useState("");
 
   if (localStorage.getItem("token") !== null && localStorage.getItem("username") !== null){
+    alert("you are already logged in");
     useEffect(() => {
         navigate('/');
     }, [navigate]);

@@ -7,6 +7,8 @@ const HomePage: React.FC = () => {
     const handleNavigate = () => {
       navigate("/login"); 
     };
+    
+    
   return (
     <div className="container d-flex flex-column align-items-center justify-content-center" style={{height: "100%"}}>
       <div className="row w-100">
