@@ -1,23 +1,123 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
+import { hitpoint } from '../HitPoint';
+
 
 const MembersPage = () => {
+
+    const {id} = useParams();
+    const [group, setGroup] = useState<{id: string, name: string, members: [string]}>()
     const navigate = useNavigate();
     const [viewTaskModal, setviewTaskModal] = useState(false);  // Modal visibility state for Create Group
+    const [selectedUser, setSelectedUser] = useState("");
+    const [task, setTask] = useState<{id: string, title: string, completed: boolean}[]>();
 
-    const flipViewTask = () => { 
+    const flipViewTask = async (person: string) => { 
+        setSelectedUser(person);
+
+        
+    const token = localStorage.getItem("token");
+  if (!token) {
+    return;
+  }
+  try {
+    const response = await axios.post(
+      hitpoint + "/api/task/other",
+      { username: person, },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    
+  setTask(response.data.tasks);
+  } catch (error : any) {
+  }
+    
+
         setviewTaskModal(!viewTaskModal);
     }
     
   // Handle opening of Create Group modal
-  const handleCreateGroupClick = () => {
+  const handleCreateGroupClick = async () => {
+    
+    const token = localStorage.getItem("token");
+  if (!token) {
+    return;
+  }
+  try {
+    const response = await axios.post(
+      hitpoint + "/api/group/leave",
+      { groupid: id, },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+   
+    navigate("/group");
+  } catch (error : any) {
+  }
     
   };
 
   // Handle opening of Join Group modal
-  const handleJoinGroupClick = () => {
+  const handleJoinGroupClick = async () => {
+    
+    const token = localStorage.getItem("token");
+  if (!token) {
+    return;
+  }
+  try {
+    const response = await axios.post(
+      hitpoint + "/api/group/delete",
+      { groupid: id, },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+   
+    navigate("/group");
+  } catch (error : any) {
+  }
     
   };
+  
+  const fetchGroupDetails = async () => {
+     
+    const token = localStorage.getItem("token");
+  if (!token) {
+    return;
+  }
+  try {
+    const response = await axios.post(
+      hitpoint + "/api/group/getdetail",
+      { groupid: id, },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    
+    setGroup(response.data.group);
+  } catch (error : any) {
+  }
+    
+  }
+
+  useEffect(() => {
+    fetchGroupDetails()
+  }, []);
 
   return (
     <div className="min-h-screen p-4 flex flex-col">
@@ -38,7 +138,7 @@ const MembersPage = () => {
 
         {/* Group Title */}
         <h1 className="text-white text-2xl font-medium text-center mb-4" style={{ marginTop: "20px" }}>
-          Group 1
+          {group?.name} (ID: {id})
         </h1>
 
         {/* Members Section */}
@@ -48,12 +148,12 @@ const MembersPage = () => {
 
         {/* Members List */}
         <div className="space-y-3 mb-8 px-4">
-          {['Person 1', 'Person 2', 'Person 3', 'Person 3', 'Person 3', 'Person 3'].map((person, index) => (
+          {group?.members.map((person, index) => (
             <div key={index} className="fl items-center justify-between border border-white/20 rounded px-4 py-2" style={{ marginBottom: "10px" }}>
               <span className="text-white">{person}</span>
               {/* "View Tasks" button on the extreme right */}
               <button
-                onClick={() => flipViewTask()}
+                onClick={() => flipViewTask(person)}
                 className="btn btn-outline-light btn-sm px-6 py-3 rounded-3 hover:bg-white/10 transition-all duration-300 ml-auto">
                 View Tasks
               </button>
@@ -71,21 +171,21 @@ const MembersPage = () => {
             backgroundColor: "black", padding: "20px", borderRadius: "10px",
             width: "80%", maxWidth: "500px", textAlign: "center", border: "2px solid white"
           }}>
-            <h2 className="text-white text-xl mb-4">MC's tasks</h2>            
+            <h2 className="text-white text-xl mb-4">{selectedUser}'s tasks</h2>            
             {/* Flex container for side-by-side buttons with a gap and margin */}
                           <div style={{ display: "flex",flexDirection: "column" , gap: "20px", justifyContent: "center", marginTop: "20px" }}>
                               
                           <div className="space-y-3 mb-8 px-4">
-          {['Task 1', 'Task 2', 'Task 3', 'Task 3', 'Task 3', 'Task 3'].map((person, index) => (
+          {task !== undefined? task.map((t: any, index: number) => (
             <div key={index} className="fl items-center justify-between border border-white/20 rounded px-4 py-2" style={{ marginBottom: "10px" }}>
-              <span className="text-white">{person}</span>
+            <span className={t.completed ? 'text-secondary' : "text-white"}>{t.title}</span>
               {/* "View Tasks" button on the extreme right */}
             </div>
-          ))}
+          )) : <></>}
         </div>
               {/* Cancel Button */}
               <button
-                onClick={() => flipViewTask()}  // Close modal without saving
+                onClick={() => setviewTaskModal(false)}  // Close modal without saving
                 className="bg-black text-white px-6 py-3 rounded-3 border-2 border-white hover:bg-white/10 transition-all duration-300 w-full">
                 Back
               </button>

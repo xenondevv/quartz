@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, BrowserRouter } from 'react-router-dom';
 import Header from './components/Header';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
@@ -23,7 +23,7 @@ const App: React.FC = () => {
           <Route path='/signup' element={<SignupPage/>}/>
           <Route path="/task" element={<TaskPage/>} />
           <Route path="/group" element={<GroupPage />} />
-          <Route path="/members" element={<MembersPage/>} />
+          <Route path="/group/:id" element={<MembersPage/>} />
         </Routes>
       </div>
     </Router>

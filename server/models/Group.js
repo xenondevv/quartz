@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { userSchema } from "./User.js";
 
 const groupSchema = mongoose.Schema({
     name: {
@@ -10,6 +9,7 @@ const groupSchema = mongoose.Schema({
     groupid: {
         type: String,
         required: true,
+        unique: true
     },
 
     members: {

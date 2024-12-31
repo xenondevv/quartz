@@ -3,8 +3,12 @@ import User from "../models/User.js";
 import crypto from "crypto";
 
 async function createGroup(req, res) {
+    console.log("bhak mc");
     const name = req.body.name;
     const username = req.user.username;
+
+    console.log(name);
+    console.log(username);
 
     try {
         const group = {
@@ -25,7 +29,7 @@ async function createGroup(req, res) {
             });
         }
         
-        const g = await Group.create(group);
+        const g = await Group.create(group).catch((e) => {console.log(e.message)});
         
         if(g){
             return res.status(200).json({
@@ -137,7 +141,7 @@ async function leaveGroup(req, res) {
         }
 
         group.members = group.members.filter(member => member !== username);
-        await group.save();
+         await group.save();
 
         await User.findOneAndUpdate(
             { username },
@@ -155,8 +159,42 @@ async function leaveGroup(req, res) {
     }
 }
 
+
+async function groupDetails(req, res) {
+    const groupid = req.body.groupid;
+    const username = req.user.username;
+
+    try {
+        const group = await Group.findOne({ groupid });
+
+        if (!group) {
+            return res.status(404).json({
+                message: "Group not found!"
+            });
+        }
+
+        if (!group.members.includes(username)) {
+            return res.status(400).json({
+                message: "You are not a member of this group!"
+            });
+        }
+        return res.status(200).json({
+            message: "Successfully left the group!",
+            group: group,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "An error occurred while leaving the group."
+        });
+    }
+}
+
+
+
 async function viewUserGroups(req, res) {
-    const username = req.body.username;
+    console.log("kuch jyda hi bak rho ho");
+    const username = req.user.username;
+    console.log(username)
 
     try {
         const user = await User.findOne({ username });
@@ -195,4 +233,4 @@ async function viewAllGroups(req, res) {
     }
 }
 
-export { createGroup, deleteGroup, joinGroup, leaveGroup, viewUserGroups, viewAllGroups };
+export { createGroup, deleteGroup, joinGroup, leaveGroup, viewUserGroups, viewAllGroups, groupDetails };

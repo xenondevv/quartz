@@ -206,6 +206,8 @@ button {
   border-bottom: 60px solid #000000;
   border-left: 25px solid transparent;
   border-right: 25px solid transparent;
+  border-top-right-radius: 50%;
+  border-top-left-radius: 50%;
   width: 250px;
   transform: rotate(180deg);
 }

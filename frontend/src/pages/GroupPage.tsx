@@ -1,12 +1,11 @@
-import { useState } from "react";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { hitpoint } from "../HitPoint";
+import { useNavigate } from "react-router-dom";
 
 const GroupPage = () => {
-  const [groups, setGroups] = useState([
-    { id: 1, name: "Project Alpha", members: 5 },
-    { id: 2, name: "Design Team", members: 8 },
-    { id: 3, name: "Marketing", members: 4 },
-    { id: 4, name: "Development", members: 12 }
-  ]);
+  const nv = useNavigate();
+  const [groups, setGroups] = useState<{id: string, name: string, members: number}[]>([]);
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);  // Modal visibility state for Create Group
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);  // Modal visibility state for Join Group
@@ -18,20 +17,98 @@ const GroupPage = () => {
     setIsCreateModalOpen(true); // Open modal when the button is clicked
   };
 
+  const fetchGroups = async () => {
+    
+    const token = localStorage.getItem("token");
+  if (!token) {
+    return;
+  }
+  try {
+    const response = await axios.get(
+      hitpoint + "/api/group/viewgroups",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const grps = response.data.groups;
+    const g = grps.map((gr : any) => (
+      {
+        id: gr.groupid,
+        name: gr.name,
+        members: gr.members.length
+      }      
+    ));
+
+    setGroups(g);
+  } catch (error : any) {
+  }
+    
+  }
+  
+
+  const joinGroup = async (id: string) => {
+    const token = localStorage.getItem("token");
+  if (!token) {
+    return;
+  }
+  try {
+    const response = await axios.post(
+      hitpoint + "/api/group/join",
+      { groupid: id, },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    alert("Group joined!");
+    setIsJoinModalOpen(false);
+
+    window.location.reload();
+  } catch (error : any) {
+    alert("error joining grp");
+  }
+    
+  };
+  
+  const createGroup = async (value : string) => {
+    
+    const token = localStorage.getItem("token");
+  if (!token) {
+    return;
+  }
+  try {
+    const response = await axios.post(
+      hitpoint + "/api/group/create",
+      {
+        name: value
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    
+    alert("group created");
+    setIsCreateModalOpen(false);
+  } catch (error : any) {
+  }
+    fetchGroups();    
+  }
+
+  useEffect(() => {
+    fetchGroups();
+  }, []);
   // Handle creating a group
   const handleCreateGroup = () => {
-    if (newGroupName.trim() !== "") {
-      const newGroup = {
-        id: groups.length + 1,
-        name: newGroupName,
-        members: 1, // default members count
-      };
-      setGroups([...groups, newGroup]);
-      setIsCreateModalOpen(false); // Close modal after creating the group
-      setNewGroupName("");   // Clear input field
-    } else {
-      alert("Please enter a group name.");
-    }
+    createGroup(newGroupName);
   };
 
   // Handle opening of Join Group modal
@@ -41,14 +118,7 @@ const GroupPage = () => {
 
   // Handle joining a group
   const handleJoinGroup = () => {
-    if (groupCode.trim() !== "") {
-      // You can add logic to check if the group code is valid
-      alert(`Joining group with code: ${groupCode}`);
-      setIsJoinModalOpen(false); // Close modal after joining
-      setGroupCode("");   // Clear input field
-    } else {
-      alert("Please enter a valid group code.");
-    }
+    joinGroup(groupCode.trim())
   };
 
   return (
@@ -79,9 +149,10 @@ const GroupPage = () => {
             <div className="overflow-y-auto pb-4">
               {/* Flex container for vertical layout with gap between boxes */}
               <div className="flex flex-col gap-6 px-2">
-                {groups.map((group) => (
+                {groups.length > 0 ? groups.map((group) => (
                   <button
                     key={group.id}
+                    onClick={() => { nv(`/group/${group.id}`)}}
                     className="w-full border-2 border-white rounded-lg text-white bg-transparent hover:bg-white/10 transition-all duration-300 flex items-center justify-center"
                     style={{
                       padding: "12px 16px",
@@ -96,7 +167,7 @@ const GroupPage = () => {
                       <p className="text-xs text-gray-400 text-center">{group.members} members</p>
                     </div>
                   </button>
-                ))}
+                )) : <div style={{display: "flex", justifyContent: "center"}}><p className="text-secondary">Make frens bitch<br/>Join/Create Group</p></div>}
               </div>
             </div>
           </div>

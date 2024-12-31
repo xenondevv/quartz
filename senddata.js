@@ -104,7 +104,7 @@ async function updateCompletion(id, userid){
 
 async function createGroup(name, userid){
 
-    const url = 'http://localhost:5678/api/group/create';
+    const url = 'http://172.16.32.20:5678/api/group/create';
 
 	const data = {
 		name: name
@@ -125,4 +125,4 @@ async function createGroup(name, userid){
 //addTask( "This is new task title", "this is new long subtitle", "high", "30 Dec 2024", "week", userid)
 //deleteTask("4457696", userid)
 //updateCompletion("5463644", userid);
-createGroup("NewNiggaGroup", userid);
+createGroup("new grp", userid);

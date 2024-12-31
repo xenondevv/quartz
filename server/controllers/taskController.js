@@ -112,6 +112,7 @@ async function updateCompletion(req, res) {
 
 async function getAllTasks(req, res) {
     const username = req.user.username;
+    console.log(username);
 
     try {
         const user = await User.findOne({ username });
@@ -134,6 +135,32 @@ async function getAllTasks(req, res) {
         });
     }
 }
+
+async function getTaskOfOtherUser(req, res) {
+    const username = req.body.username;
+
+    try {
+        const user = await User.findOne({ username });
+
+        if (!user) {
+            return res.status(404).json({
+                message: "Cannot find the user!"
+            });
+        }
+
+        const tasks = await Task.find({ taskid: { $in: user.tasks } });
+
+        return res.status(200).json({
+            message: "Tasks fetched successfully!",
+            tasks,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "An error occurred while fetching tasks."
+        });
+    }
+}
+
 
 async function updateTaskTitle(req, res) {
     console.log("kya bak rahe ho madarchod");
@@ -163,4 +190,4 @@ async function updateTaskTitle(req, res) {
     }
 }
 
-export { createTask, deleteTask, updateCompletion, getAllTasks, updateTaskTitle };
+export { createTask, deleteTask, updateCompletion, getAllTasks, updateTaskTitle, getTaskOfOtherUser };

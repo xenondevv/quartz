@@ -3,11 +3,21 @@ import axios from "axios";
 import { Trash2 } from "lucide-react";
 import st from "../assets/stickman.svg";
 import { hitpoint } from "../HitPoint";
+import { useNavigate } from "react-router-dom";
 
 const TaskPage = () => {
+  const navigate = useNavigate();
   const [tasks, setTasks] = useState<{ id: string; title: string; completed: boolean; isAnimating?: boolean }[]>([]);
   const [message, setMessage] = useState("");
+  const [groupname, setGroupname] = useState("");
 
+  
+    if (localStorage.getItem("token") === null || localStorage.getItem("username") === null){
+      useEffect(() => {
+        window.location.reload();
+      }, [navigate]);
+    }  
+  const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);  
   const handleTaskChange = (id: string, value: string) => {
     const newTasks = tasks.map(task =>
       task.id === id ? { ...task, title: value } : task
@@ -118,7 +128,7 @@ const TaskPage = () => {
       return;
     }
 
-    const newTask = { id: "", title: "new task", completed: false, isAnimating: false };
+    const newTask = { id: "", title: " ", completed: false, isAnimating: false };
 
     try {
       const response = await axios.post(
@@ -173,6 +183,38 @@ const TaskPage = () => {
     
   };
 
+  
+
+  const joinGroup = async (id: string) => {
+    const token = localStorage.getItem("token");
+  if (!token) {
+    setMessage("Authorization token not found.");
+    return;
+  }
+  try {
+    const response = await axios.post(
+      hitpoint + "/api/group/join",
+      { groupid: id, },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    alert("Group joined!");
+    setIsJoinModalOpen(false);
+    setMessage(response.data.message || "Task updated successfully.");
+
+      window.location.reload();
+  } catch (error : any) {
+    alert("error joining grp");
+    setMessage(error.response?.data?.message || "An error occurred while updating the task.");
+  }
+    
+  };
+
+  
   return (
     <div className="bod min-h-screen p-4" style={{ height: "100vh", overflow: "hidden" }}>
       <style>
@@ -198,12 +240,15 @@ const TaskPage = () => {
         style={{ maxWidth: "1000px", height: "100%" }}
       >
         <div className="d-flex justify-content-between align-items-center mb-4 px-3">
-          <button className="btn btn-outline-light btn-sm px-4">View Group</button>
-          <button className="btn btn-outline-light btn-sm px-4">Join Group</button>
+          <button className="btn btn-outline-light btn-sm px-4"
+          onClick={ () => navigate("/group")}>View Group</button>
+          <button className="btn btn-outline-light btn-sm px-4"
+          onClick={(e) => {setIsJoinModalOpen(true)}}
+          >Join Group</button>
         </div>
 
         <div className="bg-black rounded-4 p-4" style={{ height: "calc(100% - 60px)", overflow: "hidden" }}>
-          <h1 className="text-light text-center mb-4">To-do List</h1>
+          <h1 className="text-light text-center mb-4" style={{ fontFamily: "Sixtyfour"}}>ToDo List</h1>
 
           <div className="row" style={{ height: "calc(100% - 60px)" }}>
             <div
@@ -234,7 +279,8 @@ const TaskPage = () => {
                       type="text"
                       className={`taskcolor form-control bg-transparent ${task.completed ? "completed-task" : ""
                         }`}
-                      value={task.title}
+                      value={task.title.trim()}
+                      placeholder="New Task"
                       onChange={(e) => handleTaskChange(task.id, e.target.value)}
                       onBlur={(_e) => updateTask(task.id)}
                     />
@@ -276,8 +322,48 @@ const TaskPage = () => {
           </div>
         </div>
         {message && <p className="text-center text-light mt-3">{message}</p>}
-      </div>
+        
+      {/* Join Group Modal */}
+      {isJoinModalOpen && (
+        <div style={{
+          position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
+          backgroundColor: "rgba(0, 0, 0, 0.7)", display: "flex",
+          justifyContent: "center", alignItems: "center", zIndex: 50
+        }}>
+          <div style={{
+            backgroundColor: "black", padding: "20px", borderRadius: "10px",
+            width: "80%", maxWidth: "500px", textAlign: "center", border: "2px solid white"
+          }}>
+            <h2 className="text-white text-xl mb-4">Join a Group</h2>
+            <input
+              type="text"
+              value={groupname}
+              onChange={(e) => {setGroupname(e.target.value)}}
+              className="w-full p-3 border-2 border-white rounded-lg mb-8 bg-transparent text-white placeholder-gray-400 focus:outline-none"
+              placeholder="Enter group code"
+            />
+            
+            {/* Flex container for side-by-side buttons with a gap and margin */}
+            <div style={{ display: "flex", gap: "20px", justifyContent: "center", marginTop: "20px" }}>
+              {/* Cancel Button */}
+              <button
+                onClick={() => setIsJoinModalOpen(false)}  // Close modal without joining
+                className="bg-black text-white px-6 py-3 rounded-3 border-2 border-white hover:bg-white/10 transition-all duration-300 w-full">
+                Cancel
+              </button>
+
+              {/* Join Button */}
+              <button
+                onClick={(e) => { joinGroup(groupname)}}  // Join group on click
+                className="bg-black text-white px-6 py-3 rounded-3 border-2 border-white hover:bg-white/10 transition-all duration-300 w-full">
+                Join
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
+      </div>
   );
 };
 
